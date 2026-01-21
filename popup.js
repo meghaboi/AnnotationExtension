@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 resetToPreset('glass');
             }
 
+            applyThemeToPopup(); // Apply to popup UI
             updateCharCount();
         });
     }
@@ -110,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (type !== 'custom') {
             resetToPreset(type);
         }
+        applyThemeToPopup();
         saveNotes();
     });
 
@@ -122,12 +124,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function applyThemeToPopup() {
+        const bg = bgColorInput.value;
+        const text = textColorInput.value;
+
+        // Update Root Variables
+        document.documentElement.style.setProperty('--bg-color', bg);
+        document.documentElement.style.setProperty('--text-color', text);
+
+        // Calculate Secondary BG (Textarea)
+        // Simple approach: usage of hex with opacity or slight dimming
+        // For simplicity, let's use the BG color but slightly altered or just transparent with border
+        // Or actually, user said "just the opacity should change" -> maybe use a translucent version of BG?
+        // Let's force it to be a slightly different shade.
+
+        // If BG is light (Paper/Postit), make secondary slightly darker.
+        // If BG is dark (Glass), make secondary slightly lighter.
+        // We can use the 'opacity' input to influence it?
+
+        // Let's just use 10% white/black overlay
+        // Or simpler: use the BG color for the textarea but with a border.
+        document.documentElement.style.setProperty('--secondary-bg', adjustColor(bg, 20));
+
+        // Update accent if needed? Keep blue.
+    }
+
+    function adjustColor(hex, amount) {
+        // Simple lighten/darken
+        let col = hex.replace('#', '');
+        let num = parseInt(col, 16);
+        let r = (num >> 16) + amount;
+        let b = ((num >> 8) & 0x00FF) + amount;
+        let g = (num & 0x0000FF) + amount;
+
+        // Clamp
+        r = r > 255 ? 255 : r < 0 ? 0 : r;
+        b = b > 255 ? 255 : b < 0 ? 0 : b;
+        g = g > 255 ? 255 : g < 0 ? 0 : g;
+
+        return "#" + (g | (b << 8) | (r << 16)).toString(16).padStart(6, '0');
+    }
+
     // Color/Input Changes -> Switch to Custom & Save
     [bgColorInput, textColorInput, bgOpacityInput].forEach(input => {
         input.addEventListener('input', () => {
             if (themeSelect.value !== 'custom') {
                 themeSelect.value = 'custom';
             }
+            applyThemeToPopup();
             saveNotes(); // Real-time preview
         });
     });
