@@ -12,7 +12,8 @@
 body {
   margin: 0;
   padding: 0;
-  width: 320px; /* Standard extension width */
+  width: 320px;
+  /* Standard extension width */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -76,11 +77,11 @@ h1 {
   border-radius: 50%;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: var(--accent-color);
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   transform: translateX(20px);
 }
 
@@ -94,6 +95,112 @@ input:checked + .slider:before {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Design Panel */
+.design-panel {
+  background: var(--secondary-bg);
+  border-radius: var(--border-radius);
+  margin-bottom: 8px;
+  border: 1px solid transparent;
+  transition: border-color var(--transition-speed);
+}
+
+.design-panel[open] {
+  border-color: var(--accent-color);
+}
+
+.design-panel summary {
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  user-select: none;
+  outline: none;
+  list-style: none;
+  /* Hide default triangle */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.design-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.design-panel summary:after {
+  content: '+';
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.design-panel[open] summary:after {
+  content: '−';
+}
+
+.design-controls {
+  padding: 0 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 4px;
+  padding-top: 12px;
+}
+
+.control-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.control-row label {
+  font-size: 12px;
+  color: #a6adc8;
+}
+
+select {
+  background: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+}
+
+.color-inputs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+input[type="color"] {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  padding: 0;
+}
+
+input[type="range"] {
+  width: 80px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 textarea {

@@ -10,7 +10,8 @@
         visible: true,
         minimized: false,
         position: { top: '20px', right: '20px' },
-        size: { width: '300px', height: 'auto' }
+        size: { width: '300px', height: 'auto' },
+        style: { bg: '#1e1e2e', text: '#cdd6f4', opacity: 0.4, border: 'rgba(255,255,255,0.1)' } // Default
     };
 
     // 2. Initialization
@@ -82,6 +83,24 @@
 
     function applyStyles(wrapper) {
         Object.assign(wrapper.style, state.position);
+
+        // Apply Dynamic Theme Variables
+        if (state.style) {
+            const { bg, text, opacity, border } = state.style;
+
+            // Convert Hex BG to RGBA for opacity application
+            const rgbaBg = hexToRgba(bg, opacity || 0.4);
+            const solidBg = hexToRgba(bg, 1.0); // For hover state if we want solid
+
+            wrapper.style.setProperty('--note-bg', rgbaBg);
+            wrapper.style.setProperty('--note-bg-hover', solidBg);
+            wrapper.style.setProperty('--note-text', text);
+            wrapper.style.setProperty('--note-border', border || 'transparent');
+
+            // Adjust header color based on text color (approximate)
+            // Or just use a transparent white/black
+            wrapper.style.setProperty('--header-bg', 'rgba(127, 127, 127, 0.1)');
+        }
 
         if (!state.minimized) {
             // Only apply size if not minimized
@@ -316,6 +335,22 @@
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#039;");
+    }
+
+    // Helper: Hex to RGBA
+    function hexToRgba(hex, alpha) {
+        let r = 0, g = 0, b = 0;
+        // 3 digits
+        if (hex.length === 4) {
+            r = parseInt(hex[1] + hex[1], 16);
+            g = parseInt(hex[2] + hex[2], 16);
+            b = parseInt(hex[3] + hex[3], 16);
+        } else if (hex.length === 7) {
+            r = parseInt(hex[1] + hex[2], 16);
+            g = parseInt(hex[3] + hex[4], 16);
+            b = parseInt(hex[5] + hex[6], 16);
+        }
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     }
 
     init();
