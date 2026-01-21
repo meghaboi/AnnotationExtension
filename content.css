@@ -1,0 +1,162 @@
+.note-overlay {
+    position: fixed;
+    z-index: 2147483647;
+    width: 300px;
+    height: auto;
+    min-width: 150px;
+    /* Minimum size */
+    min-height: 100px;
+    background-color: rgba(30, 30, 46, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #cdd6f4;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: background-color 0.3s, opacity 0.3s;
+    display: flex;
+    flex-direction: column;
+    resize: both;
+    /* Resize capability */
+    overflow: hidden;
+    /* Needed for resize handle to show correctly in some cases */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.note-overlay.minimized {
+    width: auto !important;
+    height: auto !important;
+    min-width: 0;
+    min-height: 0;
+    resize: none;
+    padding: 0;
+    border-radius: 8px;
+    /* Smaller radius */
+    background-color: rgba(30, 30, 46, 0.9);
+}
+
+/* Header */
+.note-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    cursor: move;
+    user-select: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0);
+    height: 24px;
+}
+
+.note-overlay:hover .note-header,
+.note-overlay.minimized .note-header {
+    opacity: 1;
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.note-overlay.minimized .note-header {
+    border: none;
+    padding: 6px;
+}
+
+.drag-handle-icon {
+    color: #6c7086;
+    font-size: 14px;
+    margin-right: 8px;
+    line-height: 1;
+}
+
+.controls {
+    display: flex;
+    gap: 4px;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    color: #a6adc8;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 4px;
+    line-height: 1;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+    height: 20px;
+}
+
+.control-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Content Wrapper */
+.note-content-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    /* Scrollable content */
+    padding: 12px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.note-overlay.minimized .note-content-wrapper {
+    display: none;
+}
+
+.note-content {
+    white-space: pre-wrap;
+    word-break: break-word;
+    cursor: text;
+    outline: none;
+    color: #cdd6f4;
+    flex: 1;
+}
+
+.note-content a {
+    color: #89b4fa;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Edit Mode */
+.edit-textarea {
+    width: 100%;
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    resize: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    min-height: 60px;
+}
+
+.note-overlay:hover {
+    background-color: rgba(30, 30, 46, 0.95);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Scrollbar */
+.note-content-wrapper::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.note-content-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.note-content-wrapper::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}

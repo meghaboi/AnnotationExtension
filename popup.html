@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Notes</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Website Notes</h1>
+      <label class="toggle-switch">
+        <input type="checkbox" id="toggle-overlay" checked>
+        <span class="slider"></span>
+      </label>
+    </header>
+    
+    <div class="domain-info">
+      <span id="current-domain">Loading...</span>
+    </div>
+
+    <textarea id="note-input" placeholder="Type your notes here..."></textarea>
+
+    <div class="status-bar">
+      <span id="char-count">0 chars</span>
+      <span id="save-status">Saved</span>
+    </div>
+
+    <footer>
+      <button id="delete-btn" class="danger-btn">Delete Note</button>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
